@@ -2,19 +2,17 @@
 export const products = [
   {
     id: 1,
-    name: "Floral Dress",
+    name: "Plazo",
     description: "Lightweight cotton, perfect for spring.",
     images: [
-      "/asset/03f4c187-4a6e-4e70-9f5f-d19715c86a70.jpg",
-      "/asset/04c5d728-f04a-4277-91ea-0419c50bc97d.jpg",
-      "/asset/09422c10-4172-4a18-9c52-d91de4941baa.jpg"
+      "/asset/2604fd7c-d562-4d5b-8be2-7801f8d26645.jpg",
+      "/asset/897d2270-44eb-4d45-bc0b-b4d938c4663c.jpg",
+      "/asset/f20d015c-2249-4a07-9c84-e82923600711.jpg"
     ],
-    image: "/asset/03f4c187-4a6e-4e70-9f5f-d19715c86a70.jpg",
-    category: "dresses",
-    size: "M",
-    color: "Pink",
-    isNew: true,
-    isSale: false,
+    imageColors: ["Green", "Blue", "Pink"],
+    image: "/asset/897d2270-44eb-4d45-bc0b-b4d938c4663c.jpg",
+    category: "New Style",
+    size: "20 - 30",
     details: "100% cotton. Machine washable. Available in XS-XL.",
     reviews: [
       { user: "Ava", text: "My daughter loves it!" },
@@ -33,8 +31,6 @@ export const products = [
     category: "tops",
     size: "S",
     color: "Blue",
-    isNew: false,
-    isSale: true,
     details: "Poly-cotton blend with sequins. Hand wash recommended.",
     reviews: [{ user: "Zoe", text: "Sparkly and comfy!" }]
   },
@@ -50,8 +46,6 @@ export const products = [
     category: "bottoms",
     size: "L",
     color: "Yellow",
-    isNew: false,
-    isSale: false,
     details: "95% cotton, 5% elastane. Breathable and durable.",
     reviews: []
   },
@@ -68,8 +62,6 @@ export const products = [
     category: "outerwear",
     size: "M",
     color: "Green",
-    isNew: true,
-    isSale: true,
     details: "Lightweight waterproof shell with soft lining.",
     reviews: [{ user: "Lily", text: "Great for rainy days." }]
   }

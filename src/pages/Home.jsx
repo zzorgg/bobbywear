@@ -91,7 +91,7 @@ export default function Home() {
             <div className="max-w-xl">
               <h2 className="text-3xl font-bold">Ready to see samples?</h2>
               <p className="py-4 text-base-content/70">Share your styles, quantities, and timeline. We'll reply within one business day.</p>
-              <Link className="btn btn-primary" to="/catalog">Request a quote</Link>
+              <Link className="btn btn-primary" to="/catalog">Go to Catalog</Link>
             </div>
           </div>
         </div>

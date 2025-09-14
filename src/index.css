@@ -1,4 +1,86 @@
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake, bumblebee, emerald, corporate, synthwave, retro, cyberpunk, valentine, halloween, garden, forest, aqua, lofi, pastel, fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid, lemonade, night, coffee, winter, dim, nord, sunset, caramellatte, abyss, silk;
+@plugin "daisyui";
+
+/* Performance optimizations */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; height: auto; image-rendering: optimizeQuality; }
+
+/* Line clamp utilities */
+@layer utilities {
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+}
+
+/* Swiper core layout */
+.swiper { width: 100%; height: 100%; }
+.swiper-slide { display: flex; justify-content: center; align-items: center; background: transparent; }
+
+/* Custom navigation buttons (fixed, no 3D press) */
+.swiper-button-next-custom,
+.swiper-button-prev-custom {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  background: rgba(17, 24, 39, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.swiper-button-next-custom:hover,
+.swiper-button-prev-custom:hover { background: rgba(17, 24, 39, 0.5); border-color: rgba(255,255,255,0.4); }
+.swiper-button-next-custom:active,
+.swiper-button-prev-custom:active { transform: translateY(-50%); }
+.swiper-button-next-custom { right: 16px; }
+.swiper-button-prev-custom { left: 16px; }
+
+/* Hide default swiper arrows */
+.swiper-button-next, .swiper-button-prev { display: none !important; }
+
+/* Pagination bullets */
+.swiper-pagination-bullet { background: rgba(255,255,255,0.6) !important; opacity: 1 !important; transition: transform 0.2s ease, background 0.2s ease; }
+.swiper-pagination-bullet-active { background: #fff !important; transform: scale(1.2); }
+
+/* Zoom cursor */
+.swiper-zoom-container { cursor: grab; }
+.swiper-zoom-container:active { cursor: grabbing; }
+
+/* Thumbs tweaks */
+.thumbs-swiper .swiper-slide { opacity: 0.75; transition: opacity 0.2s ease; cursor: pointer; }
+.thumbs-swiper .swiper-slide-thumb-active { opacity: 1; }
+.thumbs-swiper .swiper-slide:hover { opacity: 0.9; }
+
+/* Loading shimmer */
+.loading-skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+@keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* Scrollbar */
+.aspect-square { aspect-ratio: 1; }
+.object-contain { object-fit: contain; object-position: center; }
+.object-cover { object-fit: cover; object-position: center; }
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .swiper-button-next-custom, .swiper-button-prev-custom { width: 40px; height: 40px; }
+  .swiper-button-next-custom { right: 8px; }
+  .swiper-button-prev-custom { left: 8px; }
 }

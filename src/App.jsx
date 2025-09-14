@@ -4,37 +4,52 @@ import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import ProductDetails from "./pages/ProductDetails";
 import ThemeSwitcher from "./components/ThemeSwitcher";
-import QuoteModal from "./components/QuoteModal";
 import Contact from "./pages/Contact";
 
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
+      {/* Responsive Navbar */}
       <div className="navbar bg-base-200 shadow-md">
-        <div className="navbar-start gap-2">
-          {/* Mobile menu */}
-          <details className="dropdown md:hidden">
-            <summary className="btn btn-ghost" role="button" aria-label="Open menu">☰</summary>
-            <ul className="dropdown-content z-10 menu bg-base-100 rounded-box shadow p-2 w-40 mt-2">
+        <div className="navbar-start">
+          {/* Mobile menu dropdown */}
+          <div className="dropdown lg:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" aria-label="Open menu">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+            </div>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/catalog">Catalog</Link></li>
               <li><Link to="/contact">Contact</Link></li>
+              <li>
+                <div className="flex items-center justify-between">
+                  <span>Theme</span>
+                  <ThemeSwitcher />
+                </div>
+              </li>
             </ul>
-          </details>
-          <Link to="/" className="btn btn-ghost text-xl font-bold">BobbyWear</Link>
+          </div>
+
+          {/* Brand logo */}
+          <Link to="/" className="btn btn-ghost text-xl font-bold">
+            BobbyWear
+          </Link>
         </div>
-        <div className="navbar-center hidden md:flex">
-          <ul className="menu menu-horizontal gap-2">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/catalog">Catalog</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+
+        {/* Desktop navigation */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 gap-2">
+            <li><Link to="/" className="btn btn-ghost">Home</Link></li>
+            <li><Link to="/catalog" className="btn btn-ghost">Catalog</Link></li>
+            <li><Link to="/contact" className="btn btn-ghost">Contact</Link></li>
           </ul>
         </div>
-        <div className="navbar-end gap-2">
+
+        {/* Desktop theme switcher - only visible on large screens */}
+        <div className="navbar-end hidden lg:flex">
           <ThemeSwitcher />
-          <QuoteModal />
-          <Link to="/catalog" className="btn">Catalog</Link>
         </div>
       </div>
 
