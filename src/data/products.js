@@ -5,11 +5,11 @@ export const products = [
     name: "Floral Dress",
     description: "Lightweight cotton, perfect for spring.",
     images: [
-      "https://picsum.photos/seed/dress1-1/600/420",
-      "https://picsum.photos/seed/dress1-2/600/420",
-      "https://picsum.photos/seed/dress1-3/600/420"
+      "/asset/03f4c187-4a6e-4e70-9f5f-d19715c86a70.jpg",
+      "/asset/04c5d728-f04a-4277-91ea-0419c50bc97d.jpg",
+      "/asset/09422c10-4172-4a18-9c52-d91de4941baa.jpg"
     ],
-    image: "https://picsum.photos/seed/dress1/300/200",
+    image: "/asset/03f4c187-4a6e-4e70-9f5f-d19715c86a70.jpg",
     category: "dresses",
     size: "M",
     color: "Pink",
@@ -26,10 +26,10 @@ export const products = [
     name: "Party Top",
     description: "Sparkly top for celebrations.",
     images: [
-      "https://picsum.photos/seed/top1-1/600/420",
-      "https://picsum.photos/seed/top1-2/600/420"
+      "/asset/105672b2-fb3e-4c96-b9da-cc8550d438cb.jpg",
+      "/asset/129e0046-a188-43ae-b2d4-f36cf676c5bd.jpg"
     ],
-    image: "https://picsum.photos/seed/top1/300/200",
+    image: "/asset/105672b2-fb3e-4c96-b9da-cc8550d438cb.jpg",
     category: "tops",
     size: "S",
     color: "Blue",
@@ -43,10 +43,10 @@ export const products = [
     name: "Comfy Leggings",
     description: "Stretchy and soft for all-day play.",
     images: [
-      "https://picsum.photos/seed/bottom1-1/600/420",
-      "https://picsum.photos/seed/bottom1-2/600/420"
+      "/asset/259d3d9a-02a1-45d2-a1ff-5f2284b5096e.jpg",
+      "/asset/2604fd7c-d562-4d5b-8be2-7801f8d26645.jpg"
     ],
-    image: "https://picsum.photos/seed/bottom1/300/200",
+    image: "/asset/259d3d9a-02a1-45d2-a1ff-5f2284b5096e.jpg",
     category: "bottoms",
     size: "L",
     color: "Yellow",
@@ -60,11 +60,11 @@ export const products = [
     name: "Rain Jacket",
     description: "Waterproof and stylish.",
     images: [
-      "https://picsum.photos/seed/outer1-1/600/420",
-      "https://picsum.photos/seed/outer1-2/600/420",
-      "https://picsum.photos/seed/outer1-3/600/420"
+      "/asset/2a122335-736b-4936-bc2e-8e75d8045b6f.jpg",
+      "/asset/2bf89d0d-affa-40d4-8b24-773cb53b41c5.jpg",
+      "/asset/3a446802-48b2-48d3-9859-c1f7663f6287.jpg"
     ],
-    image: "https://picsum.photos/seed/outerwear1/300/200",
+    image: "/asset/2a122335-736b-4936-bc2e-8e75d8045b6f.jpg",
     category: "outerwear",
     size: "M",
     color: "Green",
@@ -74,4 +74,3 @@ export const products = [
     reviews: [{ user: "Lily", text: "Great for rainy days." }]
   }
 ];
-

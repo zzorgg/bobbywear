@@ -18,13 +18,17 @@ export default function ProductDetails() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="card bg-base-100 shadow-xl max-w-4xl mx-auto">
+      <div className="card bg-base-100 shadow-xl max-w-5xl mx-auto">
         <div className="grid md:grid-cols-2 gap-4 p-4">
-          <figure className="hover-gallery max-w-full">
-            {product.images?.map((src, i) => (
-              <img key={i} src={src} alt={`${product.name} ${i + 1}`} className="w-full h-64 object-cover" />
-            ))}
-          </figure>
+          <div className="max-w-full">
+            <div className="grid grid-cols-1 gap-3">
+              {(product.images?.length ? product.images : [product.image]).filter(Boolean).map((src, i) => (
+                <div key={i} className="rounded-lg overflow-hidden">
+                  <img src={src} alt={`${product.name} ${i + 1}`} className="w-full h-auto object-contain block max-h-[80vh]" />
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="card-body p-0 md:p-2">
             <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
             <div className="flex flex-wrap gap-2 mb-3">
