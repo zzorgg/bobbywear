@@ -1,15 +1,35 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import ProductDetails from "./pages/ProductDetails";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // If it's an admin route, render only the admin dashboard without navbar/footer
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen">
+        {/* Theme switcher for admin - positioned absolutely */}
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeSwitcher />
+        </div>
+        <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </div>
+    );
+  }
+
+  // Regular website layout with navbar and footer
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Responsive Navbar */}
+      {/* Responsive Navbar - only for non-admin pages */}
       <div className="navbar bg-base-200 shadow-md">
         <div className="navbar-start">
           {/* Mobile menu dropdown */}
@@ -63,7 +83,7 @@ export default function App() {
         </Routes>
       </div>
 
-      {/* Footer */}
+      {/* Footer - only for non-admin pages */}
       <footer className="footer p-10 bg-base-200 text-base-content">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
