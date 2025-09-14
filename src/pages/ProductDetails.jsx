@@ -140,10 +140,11 @@ export default function ProductDetails() {
             {/* Product Info Section */}
             <div className="space-y-6">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-base-content mb-3">{product.name}</h1>
+                <h1 className="text-4xl lg:text-5xl font-bold text-base-content mb-4 leading-tight">{product.name}</h1>
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="badge badge-outline capitalize font-medium">{product.category}</span>
                   <span className="badge badge-outline font-medium">Size: {product.size}</span>
+                  <span className="badge badge-outline font-medium">#{product.designNumber}</span>
                   <span className="badge badge-outline font-medium">Color: {displayedColor}</span>
                 </div>
                 <p className="text-base-content/80 text-lg leading-relaxed">{product.description}</p>

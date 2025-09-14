@@ -8,13 +8,13 @@ export default function ProductCard({ product }) {
   // Map some common color names to nice swatch colors
   const colorMap = useMemo(() => ({
     pink: "#f472b6",
-    blue: "#60a5fa",
-    green: "#34d399",
+    blue: "#87CEEB",
+    olive: "#99ac76",
     yellow: "#f59e0b",
     red: "#ef4444",
     black: "#111827",
     white: "#ffffff",
-    purple: "#a78bfa",
+    purple: "#dcb9ce",
     orange: "#fb923c",
     brown: "#a16207",
     grey: "#9ca3af",
@@ -95,9 +95,10 @@ export default function ProductCard({ product }) {
         <div className="p-5 space-y-3">
           <div className="flex gap-2 flex-wrap">
             <span className="badge badge-outline badge-sm capitalize font-medium">{product.category}</span>
-            <span className="badge badge-ghost badge-sm">{product.size}</span>
+            <span className="badge badge-outline badge-sm font-medium">{product.size}</span>
+            <span className="badge badge-outline badge-sm font-medium">#{product.designNumber}</span>
           </div>
-          <h3 className="font-bold text-lg text-base-content leading-tight line-clamp-2">{product.name}</h3>
+          <h3 className="font-bold text-xl text-base-content leading-tight line-clamp-2 mb-2">{product.name}</h3>
           <p className="text-base-content/70 text-sm leading-relaxed line-clamp-2">{product.description}</p>
           <div className="flex gap-2 pt-2">
             <Link to={`/product/${product.id}`} className="btn btn-primary btn-sm flex-1 font-medium">
