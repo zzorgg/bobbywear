@@ -1,5 +1,7 @@
+import type { Product } from '@/types';
+
 // Centralized sample product data used by Catalog and ProductDetails
-export const products = [
+export const products: Product[] = [
   {
     id: 1,
     name: "Plazo",

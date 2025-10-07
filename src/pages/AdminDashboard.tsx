@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import AdminSidebar from '../components/admin/AdminSidebar';
-import UserMetrics from '../components/admin/UserMetrics';
-import ContentManager from '../components/admin/ContentManager';
+import { useState, useEffect, FormEvent } from 'react';
+import { Lock } from 'lucide-react';
+import AdminSidebar from '@/components/admin/AdminSidebar';
+import UserMetrics from '@/components/admin/UserMetrics';
+import ContentManager from '@/components/admin/ContentManager';
+
+type Section = 'metrics' | 'content';
 
 export default function AdminDashboard() {
-  const [activeSection, setActiveSection] = useState('metrics');
+  const [activeSection, setActiveSection] = useState<Section>('metrics');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-  // Simple authentication (replace with proper auth in production)
-  const handleLogin = (e) => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (credentials.username === 'admin' && credentials.password === 'admin123') {
       setIsAuthenticated(true);
@@ -34,13 +36,21 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div className="card w-96 bg-base-100 shadow-2xl border border-base-300">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
+        <div className="card w-full max-w-md bg-base-100 shadow-2xl border border-base-300">
           <div className="card-body p-8">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-primary mb-2">Admin Portal</h2>
-              <p className="text-base-content/70">Enter your credentials to access the dashboard</p>
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+                <Lock className="w-8 h-8 text-primary" />
+              </div>
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Admin Portal
+              </h2>
+              <p className="text-base-content/70">
+                Enter your credentials to access the dashboard
+              </p>
             </div>
+
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="form-control">
                 <label className="label">
@@ -51,10 +61,13 @@ export default function AdminDashboard() {
                   placeholder="Enter username"
                   className="input input-bordered focus:input-primary"
                   value={credentials.username}
-                  onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, username: e.target.value })
+                  }
                   required
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text font-medium">Password</span>
@@ -64,17 +77,21 @@ export default function AdminDashboard() {
                   placeholder="Enter password"
                   className="input input-bordered focus:input-primary"
                   value={credentials.password}
-                  onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, password: e.target.value })
+                  }
                   required
                 />
               </div>
+
               <button type="submit" className="btn btn-primary w-full mt-6">
                 Sign In
               </button>
             </form>
+
             <div className="text-center mt-6 p-4 bg-base-200 rounded-lg">
               <p className="text-sm text-base-content/70 mb-1">Demo Credentials:</p>
-              <p className="text-sm font-mono">admin / admin123</p>
+              <p className="text-sm font-mono font-bold">admin / admin123</p>
             </div>
           </div>
         </div>
@@ -84,14 +101,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-base-200">
-      {/* Fixed Sidebar */}
       <AdminSidebar
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         onLogout={handleLogout}
       />
 
-      {/* Main Content Area - Properly centered relative to sidebar */}
       <div className="pl-64 min-h-screen">
         <div className="max-w-7xl mx-auto px-8 py-8">
           <div className="mb-8">
@@ -101,12 +116,10 @@ export default function AdminDashboard() {
             <p className="text-base-content/70">
               {activeSection === 'metrics'
                 ? 'Monitor your website performance and user engagement'
-                : 'Manage your catalog, products, and website content'
-              }
+                : 'Manage your catalog, products, and website content'}
             </p>
           </div>
 
-          {/* Content Area */}
           <div>
             {activeSection === 'metrics' && <UserMetrics />}
             {activeSection === 'content' && <ContentManager />}

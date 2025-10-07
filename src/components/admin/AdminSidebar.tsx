@@ -1,24 +1,42 @@
-import React from 'react';
-import { BarChart3, Settings, LogOut, Globe } from 'lucide-react';
+import { BarChart3, Settings, LogOut, Globe, type LucideIcon } from 'lucide-react';
 
-export default function AdminSidebar({ activeSection, setActiveSection, onLogout }) {
-  const menuItems = [
-    {
-      id: 'metrics',
-      label: 'User Metrics',
-      icon: BarChart3,
-      description: 'Analytics & Performance'
-    },
-    {
-      id: 'content',
-      label: 'Content Manager',
-      icon: Settings,
-      description: 'Manage Website Content'
-    }
-  ];
+type Section = 'metrics' | 'content';
 
+interface MenuItem {
+  id: Section;
+  label: string;
+  icon: LucideIcon;
+  description: string;
+}
+
+interface AdminSidebarProps {
+  activeSection: Section;
+  setActiveSection: (section: Section) => void;
+  onLogout: () => void;
+}
+
+const menuItems: MenuItem[] = [
+  {
+    id: 'metrics',
+    label: 'User Metrics',
+    icon: BarChart3,
+    description: 'Analytics & Performance',
+  },
+  {
+    id: 'content',
+    label: 'Content Manager',
+    icon: Settings,
+    description: 'Manage Website Content',
+  },
+];
+
+export default function AdminSidebar({
+  activeSection,
+  setActiveSection,
+  onLogout,
+}: AdminSidebarProps) {
   return (
-    <div className="w-64 bg-base-100 shadow-xl border-r border-base-300 fixed left-0 top-0 h-full z-50">
+    <div className="w-64 bg-base-100 shadow-xl border-r border-base-300 fixed left-0 top-0 h-full z-50 flex flex-col">
       {/* Header */}
       <div className="p-6 border-b border-base-300 bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="flex items-center gap-3 mb-2">
@@ -33,32 +51,38 @@ export default function AdminSidebar({ activeSection, setActiveSection, onLogout
       </div>
 
       {/* Navigation Menu */}
-      <nav className="p-4 flex-1">
+      <nav className="p-4 flex-1 overflow-y-auto">
         <div className="space-y-2">
           {menuItems.map((item) => {
             const IconComponent = item.icon;
+            const isActive = activeSection === item.id;
+
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveSection(item.id)}
                 className={`w-full text-left p-4 rounded-xl transition-all duration-200 flex items-center gap-3 group ${
-                  activeSection === item.id
-                    ? 'bg-primary text-primary-content shadow-lg'
+                  isActive
+                    ? 'bg-primary text-primary-content shadow-lg scale-105'
                     : 'hover:bg-base-200 text-base-content hover:shadow-md'
                 }`}
               >
-                <div className={`p-2 rounded-lg transition-colors ${
-                  activeSection === item.id 
-                    ? 'bg-primary-content/20' 
-                    : 'bg-base-300 group-hover:bg-primary/20'
-                }`}>
+                <div
+                  className={`p-2 rounded-lg transition-colors ${
+                    isActive
+                      ? 'bg-primary-content/20'
+                      : 'bg-base-300 group-hover:bg-primary/20'
+                  }`}
+                >
                   <IconComponent className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
                   <div className="font-semibold text-sm">{item.label}</div>
-                  <div className={`text-xs opacity-70 ${
-                    activeSection === item.id ? 'text-primary-content/70' : 'text-base-content/60'
-                  }`}>
+                  <div
+                    className={`text-xs opacity-70 ${
+                      isActive ? 'text-primary-content/70' : 'text-base-content/60'
+                    }`}
+                  >
                     {item.description}
                   </div>
                 </div>
@@ -80,7 +104,7 @@ export default function AdminSidebar({ activeSection, setActiveSection, onLogout
             <div className="p-2 rounded-lg bg-info/20 group-hover:bg-info/30 transition-colors">
               <Globe className="w-4 h-4 text-info" />
             </div>
-            <span className="font-medium text-sm">Visit BobbyWear.com</span>
+            <span className="font-medium text-sm">Visit Website</span>
           </a>
 
           <button

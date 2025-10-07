@@ -1,11 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 @plugin "daisyui" {
     themes: all;
 }
 
+@plugin "daisyui/theme" {
+  name: "bobbywear";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0.005 240);
+  --color-base-300: oklch(95% 0.01 240);
+  --color-base-content: oklch(25% 0.015 240);
+  
+  --color-primary: oklch(65% 0.25 260);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(70% 0.2 320);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(75% 0.2 180);
+  --color-accent-content: oklch(100% 0 0);
+  
+  --color-neutral: oklch(30% 0.02 240);
+  --color-neutral-content: oklch(100% 0 0);
+  
+  --color-info: oklch(70% 0.15 220);
+  --color-success: oklch(70% 0.18 150);
+  --color-warning: oklch(80% 0.2 80);
+  --color-error: oklch(65% 0.25 25);
+
+  --radius-box: 1.5rem;
+  --radius-btn: 0.75rem;
+  --border: 1px;
+}
+
 /* Performance optimizations */
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { 
+  scroll-behavior: smooth;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
 body {
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
@@ -14,16 +50,54 @@ body {
 }
 img { max-width: 100%; height: auto; image-rendering: optimizeQuality; }
 
+/* Custom utilities */
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@utility glass-nav {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+@utility heading-font {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
 /* Line clamp utilities */
-@layer utilities {
-  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
-  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+@utility line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+@utility line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@utility line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 /* Swiper core layout */
 .swiper { width: 100%; height: 100%; }
 .swiper-slide { display: flex; justify-content: center; align-items: center; background: transparent; }
+
+/* Swiper fade effect */
+.swiper-fade .swiper-slide { pointer-events: none; transition-property: opacity; }
+.swiper-fade .swiper-slide-active { pointer-events: auto; }
 
 /* Custom navigation buttons (fixed, no 3D press) */
 .swiper-button-next-custom,
@@ -75,10 +149,74 @@ img { max-width: 100%; height: auto; image-rendering: optimizeQuality; }
 .loading-skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
 @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-/* Scrollbar */
+@utility scrollbar-hide {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Aspect ratio utilities */
 .aspect-square { aspect-ratio: 1; }
 .object-contain { object-fit: contain; object-position: center; }
 .object-cover { object-fit: cover; object-position: center; }
+
+/* Animations */
+.float-card { animation: floatY 6s ease-in-out infinite; }
+@keyframes floatY { 
+  0%, 100% { transform: translateY(0); } 
+  50% { transform: translateY(-8px); } 
+}
+
+.fade-in { animation: fadeSwap 450ms ease; }
+@keyframes fadeSwap { 
+  from { opacity: 0; transform: translateY(8px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+.slide-in-left { animation: slideLeft 0.5s ease; }
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right { animation: slideRight 0.5s ease; }
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.scale-in { animation: scaleIn 0.4s ease; }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-progress { animation: progressFill 3s linear forwards; }
+@keyframes progressFill { 
+  from { transform: translateX(-100%); } 
+  to { transform: translateX(0); } 
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 1000px 100%;
+}
 
 /* Mobile adjustments */
 @media (max-width: 640px) {

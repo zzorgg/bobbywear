@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -12,7 +12,26 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js';
-import { Users, Eye, ShoppingCart, TrendingUp, Clock, Globe } from 'lucide-react';
+import { Users, Eye, ShoppingCart, TrendingUp, Clock, Globe, type LucideIcon } from 'lucide-react';
+
+interface MetricsData {
+  totalVisitors: number;
+  dailyVisitors: number;
+  pageViews: number;
+  bounceRate: number;
+  avgSessionTime: string;
+  conversionRate: number;
+}
+
+interface StatCardProps {
+  icon: LucideIcon;
+  title: string;
+  value: string | number;
+  change?: string;
+  color?: string;
+}
+
+type TimeRange = '24h' | '7d' | '30d' | '90d';
 
 // Register Chart.js components
 ChartJS.register(
@@ -28,8 +47,8 @@ ChartJS.register(
 );
 
 export default function UserMetrics() {
-  const [timeRange, setTimeRange] = useState('7d');
-  const [metricsData, setMetricsData] = useState({
+  const [timeRange, setTimeRange] = useState<TimeRange>('7d');
+  const [metricsData] = useState<MetricsData>({
     totalVisitors: 12543,
     dailyVisitors: 342,
     pageViews: 45621,
@@ -85,14 +104,15 @@ export default function UserMetrics() {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top' as const,
       },
     },
   };
 
-  const StatCard = ({ icon: Icon, title, value, change, color = 'primary' }) => (
+  const StatCard = ({ icon: Icon, title, value, change, color = 'primary' }: StatCardProps) => (
     <div className="card bg-base-100 shadow-lg">
       <div className="card-body">
         <div className="flex items-center justify-between">

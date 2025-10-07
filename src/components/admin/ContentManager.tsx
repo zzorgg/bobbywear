@@ -1,9 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Upload, Save, X, Image as ImageIcon } from 'lucide-react';
+import { useState, FormEvent } from 'react';
+import { Plus, Edit, Trash2, Upload, Save, Image as ImageIcon } from 'lucide-react';
+
+interface ProductData {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  stock: number;
+  image: string;
+  description: string;
+  available: boolean;
+}
+
+interface HomePageContent {
+  heroTitle: string;
+  heroSubtitle: string;
+  featuredProducts: number[];
+  announcement: string;
+}
+
+type TabType = 'products' | 'homepage' | 'images';
 
 export default function ContentManager() {
-  const [activeTab, setActiveTab] = useState('products');
-  const [products, setProducts] = useState([
+  const [activeTab, setActiveTab] = useState<TabType>('products');
+  const [products, setProducts] = useState<ProductData[]>([
     {
       id: 1,
       name: 'Summer Dress',
@@ -36,37 +56,37 @@ export default function ContentManager() {
     }
   ]);
 
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingProduct, setEditingProduct] = useState<ProductData | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newProduct, setNewProduct] = useState({
+  const [newProduct, setNewProduct] = useState<Omit<ProductData, 'id'>>({
     name: '',
-    price: '',
+    price: 0,
     category: '',
-    stock: '',
+    stock: 0,
     image: '',
     description: '',
     available: true
   });
 
-  const [homePageContent, setHomePageContent] = useState({
+  const [homePageContent, setHomePageContent] = useState<HomePageContent>({
     heroTitle: 'Welcome to BobbyWear',
     heroSubtitle: 'Discover the latest fashion trends',
     featuredProducts: [1, 2],
     announcement: 'Free shipping on orders over $100!'
   });
 
-  const handleProductSave = (product) => {
-    if (editingProduct) {
-      setProducts(products.map(p => p.id === product.id ? product : p));
+  const handleProductSave = (product: ProductData | Omit<ProductData, 'id'>) => {
+    if (editingProduct && 'id' in product) {
+      setProducts(products.map(p => p.id === product.id ? product as ProductData : p));
       setEditingProduct(null);
     } else {
       const newId = Math.max(...products.map(p => p.id)) + 1;
       setProducts([...products, { ...product, id: newId }]);
       setNewProduct({
         name: '',
-        price: '',
+        price: 0,
         category: '',
-        stock: '',
+        stock: 0,
         image: '',
         description: '',
         available: true
@@ -75,28 +95,30 @@ export default function ContentManager() {
     }
   };
 
-  const handleProductDelete = (id) => {
+  const handleProductDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this product?')) {
       setProducts(products.filter(p => p.id !== id));
     }
   };
 
-  const handleToggleAvailability = (id) => {
+  const handleToggleAvailability = (id: number) => {
     setProducts(products.map(p =>
       p.id === id ? { ...p, available: !p.available } : p
     ));
   };
 
-  const ProductForm = ({ product, onSave, onCancel }) => {
+  interface ProductFormProps {
+    product: ProductData | null;
+    onSave: (product: ProductData | Omit<ProductData, 'id'>) => void;
+    onCancel: () => void;
+  }
+
+  const ProductForm = ({ product, onSave, onCancel }: ProductFormProps) => {
     const [formData, setFormData] = useState(product || newProduct);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      onSave({
-        ...formData,
-        price: parseFloat(formData.price),
-        stock: parseInt(formData.stock)
-      });
+      onSave(formData);
     };
 
     return (
@@ -128,7 +150,7 @@ export default function ContentManager() {
                   step="0.01"
                   className="input input-bordered"
                   value={formData.price}
-                  onChange={(e) => setFormData({...formData, price: e.target.value})}
+                  onChange={(e) => setFormData({...formData, price: parseFloat(e.target.value) || 0})}
                   required
                 />
               </div>
@@ -157,7 +179,7 @@ export default function ContentManager() {
                   type="number"
                   className="input input-bordered"
                   value={formData.stock}
-                  onChange={(e) => setFormData({...formData, stock: e.target.value})}
+                  onChange={(e) => setFormData({...formData, stock: parseInt(e.target.value) || 0})}
                   required
                 />
               </div>
@@ -286,9 +308,10 @@ export default function ContentManager() {
                               <img
                                 src={product.image}
                                 alt={product.name}
-                                onError={(e) => {
-                                  e.target.src = 'https://via.placeholder.com/150';
-                                }}
+                               onError={(e) => {
+                                   const target = e.target as HTMLImageElement;
+                                   target.src = 'https://via.placeholder.com/150';
+                                 }}
                               />
                             </div>
                           </div>
